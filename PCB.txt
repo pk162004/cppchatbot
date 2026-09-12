@@ -1,0 +1,75 @@
+================================================================================
+          MANUFACTURING DEFECT AND DFM REMEDIATION STANDARD
+                (References: IPC-A-610J / IPC-2221B)
+================================================================================
+
+--------------------------------------------------------------------------------
+RULE ID: DFX-001  |  DEFECT TARGET: SOLDER BRIDGE / SHORT CIRCUIT
+--------------------------------------------------------------------------------
+- VISUAL DEFINITION (IPC-A-610): An unintended conductive path formed by a 
+  buildup of solder running between two or more adjacent pads, traces, or 
+  component pins, resulting in an electrical short.
+- MANUFACTURING ROOT CAUSE: Excess solder paste deposition from worn stencils, 
+  inadequate solder mask dams between pins, or improper placement pressure 
+  forcing paste outward before reflow.
+- REPAIR METHOD: Apply high-quality liquid flux to the bridged area. Use a 
+  clean chisel soldering iron tip paired with copper desoldering braid (wick) 
+  to draw out the excess volume. Clean residue thoroughly with isopropyl alcohol.
+- CORRECTED DESIGN ACTION: Modify the PCB layout file to increase the solder mask 
+  dam width to a absolute minimum of 0.1 mm (4 mils) between fine-pitch SMD pads. 
+  If wave soldering is used, implement a sacrificial "solder thief pad" at the 
+  trailing edge of the component footprint row to pull excess solder away.
+
+--------------------------------------------------------------------------------
+RULE ID: DFX-002  |  DEFECT TARGET: MISSING COMPONENT / VACANT FOOTPRINT
+--------------------------------------------------------------------------------
+- VISUAL DEFINITION (IPC-A-610): A target landing pad or component footprint 
+  on the completed assembly layer is entirely devoid of its designated 
+  schematic electronic component.
+- MANUFACTURING ROOT CAUSE: Stencil aperture clogging resulting in no paste, 
+  pick-and-place machine nozzle vacuum failure, or strong mechanical vibration 
+  shaking components loose before the reflow oven zone.
+- REPAIR METHOD: Apply a controlled dot of fresh solder paste onto the vacant 
+  PCB pads using a micro-syringe. Use precision tweezers to place a verified 
+  replacement component matching correct schematic orientation. Reflow locally 
+  using a hot-air rework station set to the component's safe thermal profile.
+- CORRECTED DESIGN ACTION: Verify and adjust pick-and-place feeder coordinate offsets. 
+  Ensure the component footprint pads match the manufacturer's suggested nominal 
+  dimensions (SMT pad lengths must extend at least 0.2 mm (8 mils) past the 
+  physical component lead boundary) to maximize wet-surface tension holding forces.
+
+--------------------------------------------------------------------------------
+RULE ID: DFX-003  |  DEFECT TARGET: TRACE CLEARANCE VIOLATION
+--------------------------------------------------------------------------------
+- VISUAL DEFINITION (IPC-2221): Electrical isolation clearance spacing between 
+  two distinct neighboring copper traces or nets falls below the safe voltage 
+  breakdown threshold specified by the standard.
+- MANUFACTURING ROOT CAUSE: Poor design layout constraints, trace width/spacing 
+  over-etching during raw board fabrication, or copper migration issues.
+- REPAIR METHOD: Physical board repair requires cutting the shorted copper trace 
+  using a micro-scalpel and running an external isolated jumper wire to restore 
+  the path. For high-voltage layers, scrap the assembly.
+- CORRECTED DESIGN ACTION: Update the Global Design Rule Check (DRC) constraints 
+  in the ECAD software. For low-voltage digital signals, maintain a minimum gap 
+  of 0.2 mm (8 mils). For high-voltage rails (e.g., 24V or higher), enforce an 
+  absolute minimum electrical clearance spacing rule of 0.25 mm (10 mils) 
+  between adjacent copper nets.
+
+--------------------------------------------------------------------------------
+RULE ID: DFX-004  |  DEFECT TARGET: TOMBSTONING / COMPONENT LIFT
+--------------------------------------------------------------------------------
+- VISUAL DEFINITION (IPC-A-610): A surface-mount component (usually a small 
+  resistor or capacitor) has partially or completely lifted off one pad, 
+  standing vertically on its end like a tombstone.
+- MANUFACTURING ROOT CAUSE: Unequal thermal wetting speeds across the two pads. 
+  One pad heats up and melts its solder paste faster, exerting a surface 
+  tension pull that stands the component upright before the opposite side melts.
+- REPAIR METHOD: Apply flux to both terminals. Touch the lifted side with a fine 
+  soldering tip while gently pushing the component flat against the board surface 
+  with tweezers until both pads reflow evenly.
+- CORRECTED DESIGN ACTION: Modify the PCB layout to guarantee equal heat distribution. 
+  If one pad connects directly to a massive power or ground copper plane, it acts 
+  as a heat sink. The layout must be corrected to include thermal relief connections 
+  (4 spokes, 0.25 mm width) instead of a solid direct copper pour tie. Ensure identical 
+  trace widths enter both sides of the SMT footprint.
+================================================================================
